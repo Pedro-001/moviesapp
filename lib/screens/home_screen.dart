@@ -5,6 +5,7 @@ import 'package:pizzabloc/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const String routerName = 'Home';
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -18,8 +19,9 @@ class HomeScreen extends StatelessWidget {
                   showSearch(context: context, delegate: MovieSearchDelegate()),
               icon: Icon(Icons.search_outlined))
         ],
-        title: Center(child: Text('Peliculas en Cines')),
+        title: Center(child: Text('Directorio Peliculas')),
       ),
+      drawer: sideMenu(),
       body: SingleChildScrollView(
         child: Column(
           children: [

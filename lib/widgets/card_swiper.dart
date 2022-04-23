@@ -1,5 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:pizzabloc/screens/details_screen.dart';
 
 import '../models/models.dart';
 
@@ -19,7 +20,7 @@ class CardSwiper extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: size.height * 0.5,
-      color: Colors.white,
+      //color: Colors.white,
       child: Swiper(
         itemCount: movies.length,
         layout: SwiperLayout.STACK,
@@ -28,8 +29,8 @@ class CardSwiper extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           final movie = movies[index];
           return GestureDetector(
-            onTap: () =>
-                Navigator.pushNamed(context, 'details', arguments: movie),
+            onTap: () => Navigator.pushNamed(context, DetailsScreen.routerName,
+                arguments: movie),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(

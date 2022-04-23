@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pizzabloc/screens/details_screen.dart';
 
 import '../models/models.dart';
 
@@ -95,7 +96,7 @@ class _MoviePoster extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: (() => Navigator.pushNamed(context, 'details',
+            onTap: (() => Navigator.pushNamed(context, DetailsScreen.routerName,
                 arguments: popularMovie)),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),

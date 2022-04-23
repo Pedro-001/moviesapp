@@ -4,6 +4,7 @@ import 'package:pizzabloc/widgets/widgets.dart';
 import '../models/models.dart';
 
 class DetailsScreen extends StatelessWidget {
+  static const String routerName = 'Details';
   const DetailsScreen({Key? key}) : super(key: key);
 
   @override

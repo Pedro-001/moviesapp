@@ -66,11 +66,11 @@ class MoviesProvider extends ChangeNotifier {
 
   MoviesProvider() {
     print('MovioesProvider Incializado');
-    this.getOnDisplayMovies();
-    this.getPopularMovies();
-    this.getUpcomingMovies();
-    this.getMoviesAction();
-    this.getMoviesComedy();
+    getOnDisplayMovies();
+    getPopularMovies();
+    getUpcomingMovies();
+    getMoviesAction();
+    getMoviesComedy();
     getMoviesAdventure();
     getMoviesCrime();
     getMoviesAnimated();
@@ -167,7 +167,6 @@ class MoviesProvider extends ChangeNotifier {
 
   getMoviesAction() async {
     actionPage++;
-    print('numero de pagin: ' + actionPage.toString());
     final jsonData = await this._getJsonData('3/movie/popular', actionPage);
     final moviesByGenre = await PopularResponse.fromJson(jsonData);
     actionMovies = [
@@ -288,7 +287,6 @@ class MoviesProvider extends ChangeNotifier {
       ...horrorMovies.toSet(),
       ...moviesByGenre.results.where((e) => e.genreIds.contains(27))
     ];
-    print(horrorMovies.length);
     notifyListeners();
   }
 

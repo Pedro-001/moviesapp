@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pizzabloc/screens/details_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../models/models.dart';
@@ -88,7 +89,8 @@ class _SuggestionItem extends StatelessWidget {
       title: Text(movie.title),
       subtitle: Text(movie.originalTitle),
       onTap: () {
-        Navigator.pushNamed(context, 'details', arguments: movie);
+        Navigator.pushNamed(context, DetailsScreen.routerName,
+            arguments: movie);
       },
     );
   }

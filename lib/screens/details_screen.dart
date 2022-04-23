@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:pizzabloc/widgets/widgets.dart';
 
+import '../models/models.dart';
+
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final String movie =
-        ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-modie';
+    final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie;
+    print(movie.title);
     return Scaffold(
         body: CustomScrollView(
       slivers: [
-        _CustomAppBar(),
+        _CustomAppBar(
+          movie: movie,
+        ),
         SliverList(
             delegate: SliverChildListDelegate([
-          _PosterAndTitle(),
-          _Overview(),
-          _Overview(),
-          _Overview(),
-          _Overview(),
-          CastingCards()
+          _PosterAndTitle(
+            movie: movie,
+          ),
+          _Overview(movie: movie),
+          CastingCards(
+            movieId: movie.id,
+          )
         ]))
       ],
     ));
@@ -27,7 +32,8 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget {
-  const _CustomAppBar({Key? key}) : super(key: key);
+  final movie;
+  const _CustomAppBar({Key? key, required this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +45,18 @@ class _CustomAppBar extends StatelessWidget {
         titlePadding: EdgeInsets.all(0),
         centerTitle: true,
         title: Container(
+            padding: EdgeInsets.all(10),
             width: double.infinity,
             alignment: Alignment.bottomCenter,
             color: Colors.black12,
             child: Text(
-              'movie.tittle',
+              movie.title,
+              textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16),
             )),
         background: FadeInImage(
           placeholder: AssetImage('images/loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/500x300'),
+          image: NetworkImage(movie.fullBackdropPath),
           fit: BoxFit.cover,
         ),
       ),
@@ -57,11 +65,13 @@ class _CustomAppBar extends StatelessWidget {
 }
 
 class _PosterAndTitle extends StatelessWidget {
-  const _PosterAndTitle({Key? key}) : super(key: key);
-
+  final movie;
+  const _PosterAndTitle({Key? key, required this.movie}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final textTheme = Theme.of(context).textTheme;
+
     return Container(
       margin: EdgeInsets.only(top: 20),
       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -71,7 +81,7 @@ class _PosterAndTitle extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: FadeInImage(
               placeholder: AssetImage('images/no-image.jpg'),
-              image: NetworkImage('https://via.placeholder.com/200x300'),
+              image: NetworkImage(movie.fullPosterImage),
               height: 150,
             ),
           ),
@@ -81,17 +91,23 @@ class _PosterAndTitle extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Movie.title',
-                style: textTheme.headline5,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+              ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: size.width - 200),
+                child: Text(
+                  movie.title,
+                  style: textTheme.headline5,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                ),
               ),
-              Text(
-                'Original.title',
-                style: textTheme.subtitle1,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
+              ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: size.width - 200),
+                child: Text(
+                  movie.originalTitle,
+                  style: textTheme.subtitle1,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
               ),
               Row(
                 children: [
@@ -104,7 +120,7 @@ class _PosterAndTitle extends StatelessWidget {
                     width: 5,
                   ),
                   Text(
-                    'Movie.voteAverage',
+                    movie.voteAverage.toString(),
                     style: textTheme.caption,
                   )
                 ],
@@ -118,14 +134,15 @@ class _PosterAndTitle extends StatelessWidget {
 }
 
 class _Overview extends StatelessWidget {
-  const _Overview({Key? key}) : super(key: key);
+  final movie;
+  const _Overview({Key? key, required this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
       child: Text(
-        'Nulla aute consequat laborum velit consectetur eu irure consectetur esse. Id anim ullamco elit dolore cillum reprehenderit nisi aute sunt elit cupidatat do labore. Ad officia exercitation aliquip nostrud consectetur incididunt pariatur.',
+        movie.overview,
         textAlign: TextAlign.justify,
         style: Theme.of(context).textTheme.subtitle1,
       ),
